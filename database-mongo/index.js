@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/test', {
+  useMongoClient: true
+});
 
 var db = mongoose.connection;
 
@@ -11,21 +13,36 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+var playlistSchema = mongoose.Schema({
+  external_url: String,
+  id: {
+    type: Number,
+    index: true
+  },
+  image_url: String,
+  name: String,
+  owner_display_name: String,
+  tracks_href: String,
+  tracks_count: Number,
+  search_count: {
+    type: Number,
+    index: true
+  }
 });
 
-var Item = mongoose.model('Item', itemSchema);
+var Playlist = mongoose.model('Item', playlistSchema);
 
 var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, items);
-    }
-  });
+  Playlist.find({})
+    .limit(10)
+    .sort('-search_count')
+    .exec(function(err, playlists) {
+      if(err) {
+        callback(err, null);
+      } else {
+        callback(null, playlists);
+      }
+    });
 };
 
 module.exports.selectAll = selectAll;

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Playlist from './components/Playlist.jsx';
+import Search from './components/Search.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,6 +22,22 @@ class App extends React.Component {
     }
   }
 
+  search(term) {
+    console.log('searching for:', term);
+      $.ajax({
+        url: '/playlists', 
+        success: (data) => {
+          this.setState({
+            items: data
+          })
+          console.log(this.state.items);
+        },
+        error: (err) => {
+          console.log('err', err);
+        }
+      });
+  }
+
   // componentDidMount() {
   //   $.ajax({
   //     url: '/playlists', 
@@ -37,6 +54,8 @@ class App extends React.Component {
 
   render () {
     return (<div>
+      <h4>Search</h4>
+      <Search callback={this.search.bind(this)}/>
       <h1>Playlists</h1>
       <Playlist items={this.state.items}/>
     </div>)
