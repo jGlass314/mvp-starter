@@ -7,6 +7,7 @@ const PlaylistItem = (props) => (
     <td><a href={ props.item.externalUrl }>link</a></td>
     <td>{ props.item.ownerDisplayName }</td>
     <td>{ props.item.tracksCount } tracks</td>
+    <td>{ props.item.searchCount } searches</td>
   </div>
 )
 

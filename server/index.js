@@ -22,7 +22,8 @@ app.get('/playlists', function (req, res) {
       name: 'kitten playlist',
       ownerDisplayName: 'Josh',
       tracksHref: 'https://api.spotify.com/v1/users/holgar_the_red/playlists/5Lzif2bIMW8RiRLtbYJHU0/tracks',
-      tracksCount: 61
+      tracksCount: 61,
+      searchCount: 5
     }
   ];
   res.json(data);
