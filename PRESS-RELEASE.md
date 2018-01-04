@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > Spotify playlist search tool
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > A playlist search tool to search based on title, album, artist or genre
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > This product will allow the user to search for music playlists based on search terms they submit. This will help the user find music they know and love, and to discover music they may have never heard before.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > The product will allow the user to discover whatever music they're searching for
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > The product issues search terms to the Spotify public API and returns relevant playlists to the user. Playlists will be stored in a local mongoDB repo to aid in additional functionality for future releases.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > This tool will allow users to search for music they know and love, and to discover new music to add to their collection
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Simply enter search terms into the search bar and submit
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "I tried this tool out, and it helped me find all sorts of playlists with links to music I loved listening to!
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Try out the tool and give us some feedback!
