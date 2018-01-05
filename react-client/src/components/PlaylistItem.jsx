@@ -2,12 +2,12 @@ import React from 'react';
 
 const PlaylistItem = (props) => (
   <div>
-    <td><img style={{ width: 50, height: 50 }} src={ props.item.imageUrl } /></td>
+    <td><img style={{ width: 50, height: 50 }} src={ props.item.images[0].url } /></td>
     <td>{ props.item.name }</td>
-    <td><a href={ props.item.externalUrl }>link</a></td>
-    <td>{ props.item.ownerDisplayName }</td>
-    <td>{ props.item.tracksCount } tracks</td>
-    <td>{ props.item.searchCount } searches</td>
+    <td><a href={ props.item.external_urls.spotify }>link</a></td>
+    <td>{ props.item.owner.display_name }</td>
+    <td>{ props.item.tracks.total } tracks</td>
+    {/* <td>{ props.item.searchCount } searches</td> */}
   </div>
 )
 
