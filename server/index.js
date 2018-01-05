@@ -11,13 +11,23 @@ app.use(bodyParser.urlencoded({
 
 var data = [ 
   {
-    externalUrl: 'http://www.google.com',
+    external_urls: {
+      spotify: 'http://www.google.com'
+    },
     id: 5,
-    imageUrl: 'https://static1.squarespace.com/static/54e8ba93e4b07c3f655b452e/t/56c2a04520c64707756f4267/1493764650017/',
+    images: [
+      {
+        url: 'https://static1.squarespace.com/static/54e8ba93e4b07c3f655b452e/t/56c2a04520c64707756f4267/1493764650017/'
+      }
+    ],
     name: 'kitten playlist',
-    ownerDisplayName: 'Josh',
+    owner: {
+      display_name: 'Josh'
+    },
     tracksHref: 'https://api.spotify.com/v1/users/holgar_the_red/playlists/5Lzif2bIMW8RiRLtbYJHU0/tracks',
-    tracksCount: 61,
+    tracks: {
+      total: 61
+    },
     searchCount: 5
   }
 ];
@@ -27,9 +37,12 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 app.post('/playlists', function (req, res) {
   console.log('got post request with term:', req.body.searchTerm);  
   // make API request here
-  api.makePlaylistSearch(req.body.searchTerm)
+  api.makePlaylistSearch(req.body.searchTerm, 25)
     .then(results => {
-      // console.log(results);
+      console.log(JSON.parse(results).playlists.items);
+      // upsert into mongodb
+      items.savePlaylists(JSON.parse(results).playlists.items)
+
       res.json(results);
     })
     .catch(err => {
@@ -39,27 +52,28 @@ app.post('/playlists', function (req, res) {
 });
 
 app.get('/playlists', function (req, res) {
-  // items.selectAll(function(err, data) {
-  //   if(err) {
-  //     res.sendStatus(500);
-  //   } else {
-  //     res.json(data);
-  //   }
-  // });
   console.log('got get request');
-  data = [ 
-    {
-      externalUrl: 'http://www.google.com',
-      id: 5,
-      imageUrl: 'https://static1.squarespace.com/static/54e8ba93e4b07c3f655b452e/t/56c2a04520c64707756f4267/1493764650017/',
-      name: 'kitten playlist',
-      ownerDisplayName: 'Josh',
-      tracksHref: 'https://api.spotify.com/v1/users/holgar_the_red/playlists/5Lzif2bIMW8RiRLtbYJHU0/tracks',
-      tracksCount: 61,
-      searchCount: 5
-    }
-  ];
-  res.json(data);
+  items.selectAllPlaylists(25)
+    .then(documents => {
+      let data = documents.map(doc => {
+        let obj = {};
+        let images = [{url: doc.image_url}];
+        obj.external_urls.spotify = {spotify: doc.external_urls};
+        obj.id = doc.id;
+        obj.images = images;
+        obj.name = doc.name;
+        obj.owner.display_name = doc.owner_display_name;
+        obj.tracks.total = doc.tracks_count;
+        obj.search_count = doc.search_count;
+        return obj;
+      })
+      console.log('responding to get with:', data);
+      res.json(data);
+    })
+    .catch(err => {
+      console.error('Error on get of playlists:', err);
+      res.status(500).json('Error on get of playlists');
+    });
 });
 
 app.listen(3000, function() {

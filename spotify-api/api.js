@@ -31,17 +31,15 @@ var getAuthToken = () => {
     })
 }
 
-var makePlaylistSearch = (term) => {
+var makePlaylistSearch = (term, itemCount) => {
     let options = {
-        url: `https://api.spotify.com/v1/search?q=${term}&type=playlist&limit=10`,
+        url: `https://api.spotify.com/v1/search?q=${term}&type=playlist&limit=${itemCount}`,
         auth: {
             bearer: access_token
           }
     }
     return request(options);
 }
-
-
 
 // get token on initialization
 getAuthToken();
