@@ -8,7 +8,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      items: []
+      items: [],
+      term: ''
     }
   }
 
@@ -22,7 +23,8 @@ class App extends React.Component {
           data = JSON.parse(data);
           // console.log('search result:', data.playlists.items);
           this.setState({
-            items: data.playlists.items
+            items: data.playlists.items,
+            term: term + ' '
           })
         },
         error: (err) => {
@@ -45,14 +47,48 @@ class App extends React.Component {
     });
   }
 
+  onPopularSearch() {
+    $.ajax({
+      url: '/playlists', 
+      success: (data) => {
+        this.setState({
+          items: data,
+          term: ''
+        })
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
   render () {
+    var playlistTerm;
+    if(this.state.term && this.state.term.length) {
+      let playlistTermArray = this.state.term.split(' ');
+      playlistTermArray = playlistTermArray.filter(val => val);
+      playlistTermArray.forEach((word, index) => {
+        playlistTermArray[index] = String(word[0]).toUpperCase() + word.slice(1);
+      })
+      playlistTerm = playlistTermArray.join(' ');
+    } else {
+      playlistTerm = 'Popular';
+    }
     return (
     
-    <div>
-      <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
-      <h4>Search</h4>
-      <Search callback={this.search.bind(this)}/>
-      <h1>Playlists</h1>
+    <div style={{'background-color':'#d3ede4'}}>
+      <h1>Spotify Playlist Search</h1>
+      <table>
+        <tr>
+          <td>
+            <Search callback={this.search.bind(this)}/>
+          </td>
+          <td>
+            <button type='button' onClick={() => this.onPopularSearch()}>Popular Search</button>
+          </td>
+        </tr>
+      </table>
+      <h3>{playlistTerm} Playlists</h3>
       <Playlist items={this.state.items}/>
     </div>
     )
