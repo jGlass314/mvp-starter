@@ -46,12 +46,16 @@ class App extends React.Component {
   }
 
   render () {
-    return (<div>
+    return (
+    
+    <div>
+      <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
       <h4>Search</h4>
       <Search callback={this.search.bind(this)}/>
       <h1>Playlists</h1>
       <Playlist items={this.state.items}/>
-    </div>)
+    </div>
+    )
   }
 }
 

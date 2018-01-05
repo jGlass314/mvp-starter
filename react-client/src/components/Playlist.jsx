@@ -1,15 +1,13 @@
 import React from 'react';
-import PlaylistItem from './PLaylistItem.jsx';
+import PlaylistItem from './PlaylistItem.jsx';
 
 const Playlist = (props) => (
   <div>
     <h4> Playlist Component </h4>
     There are { props.items.length } items.
     <table>
-      <tbody>
-        <tr>
+      <tbody style={{'align':'right'}}>
           { props.items.map(item => <PlaylistItem item={item}/>)}
-        </tr>
       </tbody>
     </table>
   </div>
