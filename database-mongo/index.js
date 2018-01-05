@@ -41,7 +41,7 @@ var savePlaylists = (items) => {
         if(!document) {
           // console.log('insert playlist:', item);
           let playlist = new Playlist({
-            external_url: item.external_urls.spotify,
+            external_urls: item.external_urls.spotify,
             id: item.id,
             image_url: item.images[0].url,
             name: item.name,

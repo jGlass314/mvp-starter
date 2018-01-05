@@ -33,17 +33,17 @@ app.get('/playlists', function (req, res) {
   items.selectAllPlaylists(25)
     .then(documents => {
       let data = documents.map(doc => {
-        // console.log('about to construct with doc:', doc);
+        //console.log('about to construct with doc:', doc);
         let obj = {};
         let images = [{url: doc.image_url}];
-        obj.external_urls = {spotify: doc.external_urls};
+        obj.external_urls = {spotify: doc.external_url};
         obj.id = doc.id;
         obj.images = images;
         obj.name = doc.name;
         obj.owner = {display_name: doc.owner_display_name};
         obj.tracks = {total: doc.tracks_count};
         obj.search_count = doc.search_count;
-        console.log('constructed obj:', obj);
+        // console.log('constructed obj:', obj);
         return obj;
       })
       // console.log('responding to get with:', data);
