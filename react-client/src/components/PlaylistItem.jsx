@@ -7,7 +7,7 @@ const PlaylistItem = (props) => (
     <td><a href={ props.item.external_urls.spotify }>link</a></td>
     <td>{ props.item.owner.display_name }</td>
     <td>{ props.item.tracks.total } tracks</td>
-    <td>{ props.item.search_count } searches</td>
+    {/* <td>{ props.item.search_count ? props.item.search_count : 0 } searches</td> */}
   </div>
 )
 
