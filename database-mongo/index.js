@@ -64,18 +64,8 @@ var savePlaylists = (items) => {
 
 var selectAllPlaylists = function(itemCount) {
    return Playlist.find({})
-  //  .then((docs) => {
-  //    console.log('docs:', docs);
-  //  })
-  //  .catch((err) => {
-  //    console.error('error: ', err);
-  //  })
       .limit(itemCount)
       .sort('-search_count');
-  // Playlist.find(function (err, docs) {
-  //   if (err) return console.error(err);
-  //   console.log('docs:', docs);
-  // })
 };
 
 module.exports.selectAllPlaylists = selectAllPlaylists;
